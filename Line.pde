@@ -15,6 +15,10 @@ class Line
  public void Draw()
  {
    stroke(_c);
-   line(_sPoint.x, _sPoint.y, _ePoint.x, _ePoint.y); 
+   line(_sPoint.x, _sPoint.y, _ePoint.x, _ePoint.y, _sPoint.z, _ePoint.z); 
+   line(_sPoint.x, _sPoint.y, _ePoint.x, _ePoint.y, _sPoint.z, _ePoint.z);
+   line(_sPoint.x, _sPoint.y, _ePoint.x, _ePoint.y, _sPoint.z, _ePoint.z);
+   line(_sPoint.x, _sPoint.y, _ePoint.x, _ePoint.y, _sPoint.z, _ePoint.z);
+   line(_sPoint.x, _sPoint.y, _ePoint.x, _ePoint.y, _sPoint.z, _ePoint.z);
  }
 }
