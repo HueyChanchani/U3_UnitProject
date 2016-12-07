@@ -1,9 +1,12 @@
+import de.voidplus.soundcloud.*;
 import ddf.minim.*;
 import ddf.minim.analysis.BeatDetect;
+
+SoundCloud soundcloud;
 Minim minim;
-AudioPlayer song;
-AudioPlayer input;
+AudioPlayer player;
 BeatDetect beat;
+
 boolean beatIt = false;
 
 float kickSize, snareSize, hatSize;
@@ -30,6 +33,7 @@ float blue = random(0, 255);
 PeasyCam Cam;
 void setup()
 {
+
   frameRate(60);
   fullScreen(P3D);
 
@@ -40,16 +44,32 @@ void setup()
   l = new ArrayList<Line>();
   sPoint = new PVector(random(width), random(height), random(0, 500));
 
-  minim = new Minim(this);
-  song = minim.loadFile("Outkast - Aquemini.mp3");
-  beat = new BeatDetect(song.bufferSize(), song.sampleRate());
+  // http://soundcloud.com/you/apps for APP_CLIENT_ID and APP_CLIENT_SECRET
+  soundcloud = new SoundCloud("Q4ck8fEuIGyH8YAEQtR9QE0bw3AfoYOj", "kftqice8woRAuNfyHWQB4Wo5GKioSesE");
+
+  //If you need any permissions:
+  soundcloud.login("hueychanchani", "manakasachin23");
+
+  // show user details
+  User me = soundcloud.get("me");
+  println(me);
+
+  // play the first track of search
+  ArrayList<Track> result = soundcloud.findTrack("Kung Fu - Part Native Remix");
+  if (result!=null)
+  {
+    println("Tracks: "+result.size());
+    minim = new Minim(this); 
+    player = minim.loadFile(result.get(0).getStreamUrl());
+  }
+
+  beat = new BeatDetect(player.bufferSize(), player.sampleRate());
   beat.setSensitivity(100);
+  player.play();
 }
 
 void draw() 
 {
-
-  song.play();
   background(0);
   beatDetect();
   rotateX(radians(rotX));
@@ -58,12 +78,7 @@ void draw()
   randomY = random(height);
   randomZ = random(0, 100);
 
-
-  //Get the PVector for the starting point
-
-
   //Get the Pvector for the ending point
-
   ePoint = new PVector(random(width), random(height), random(0, 1000));
   //Draw a line between the two
   //line(sPoint.x, sPoint.y, ePoint.x, ePoint.y);
@@ -80,7 +95,7 @@ void draw()
 
 void beatDetect()
 {
-  beat.detect(song.mix);
+  beat.detect(player.mix);
 
   if (beat.isKick())
   {
@@ -90,7 +105,7 @@ void beatDetect()
 
   if (beatIt)
   {
-    fill(random(0,255));
+    fill(random(0, 255));
     for (int i = 0; i < l.size(); i++)
     {
       l.get(i).Draw();
