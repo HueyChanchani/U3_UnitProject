@@ -1,8 +1,10 @@
 class Line
 {
 
-  color[] colors = {color(#604439), color(#9e9a75), 
-                  color(#1c222e), color(#41533b)};
+  //color[] colors = {color(#604439), color(#9e9a75), 
+                  //color(#1c222e), color(#41533b)};
+                  
+ color[] colors = {color(0), color(#f78c58)};
                   
   PVector _sPoint;
   PVector _ePoint;
@@ -12,7 +14,7 @@ class Line
   {
     _sPoint = sPoint;
     _ePoint = ePoint;
-    _c = (colors[(int)random(4)]);
+    _c = (colors[(int)random(2)]);
   }
 
   public void Draw()

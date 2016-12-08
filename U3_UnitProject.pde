@@ -1,3 +1,5 @@
+//Sound Visualization by Huey Chanchani
+
 import ddf.minim.*;
 import ddf.minim.analysis.BeatDetect;
 import peasy.*;
@@ -12,6 +14,7 @@ boolean beatIt = false;
 float kickSize, snareSize, hatSize;
 
 ArrayList<Line> l;
+ArrayList<TLOP> k;
 
 float rotX = -0.5;
 
@@ -24,19 +27,21 @@ PVector ePoint = new PVector(randomX, randomY, randomZ);
 
 void setup()
 {
-  frameRate(30);
+  frameRate(120);
   fullScreen(P3D);
+  textMode(SHAPE);
 
   Cam = new PeasyCam(this, 100);
   Cam.setMinimumDistance(20);
   Cam.setMaximumDistance(700);
 
   l = new ArrayList<Line>();
-  sPoint = new PVector(random(width), random(height), random(0, 500));
+  sPoint = new PVector(random(width), random(height), random(0, 1000));
 
+  k = new ArrayList<TLOP>();
 
   minim = new Minim(this); 
-  player = minim.loadFile("Outkast - Aquemini.mp3");
+  player = minim.loadFile("01 Ultralight Beam.mp3");
   player.play();
   beat = new BeatDetect(player.bufferSize(), player.sampleRate());
   beat.setSensitivity(100);
@@ -44,13 +49,14 @@ void setup()
 
 void draw() 
 {
-  background(0);
+  background(255, 255, 255);
   beatDetect();
+  TLOP();
   rotateX(radians(rotX));
   rotateY(-.5);
   randomX = random(width);
   randomY = random(height);
-  randomZ = random(0, 100);
+  randomZ = random(0, 1000);
 
   //Get the Pvector for the ending point
   ePoint = new PVector(random(width), random(height), random(0, 1000));
@@ -73,7 +79,6 @@ void beatDetect()
   if (beat.isKick())
   {
     beatIt = true;
-    println("BUMP");
   }
 
   if (beatIt)
@@ -81,7 +86,18 @@ void beatDetect()
     for (int i = 0; i < l.size(); i++)
     {
       l.get(i).Draw();
+      //k.get(i).Pablo();
+      fill(0);
+      text("The Life of Pablo", random(width), random(height), random(1000));
     }
   }
   beatIt = false;
+}
+
+void TLOP()
+{
+  for (int j = 0; j < k.size(); j++)
+  {
+   
+  }
 }
