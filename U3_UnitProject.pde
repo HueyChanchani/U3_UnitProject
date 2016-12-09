@@ -14,7 +14,6 @@ boolean beatIt = false;
 float kickSize, snareSize, hatSize;
 
 ArrayList<Line> l;
-ArrayList<TLOP> k;
 
 float rotX = -0.5;
 
@@ -27,7 +26,7 @@ PVector ePoint = new PVector(randomX, randomY, randomZ);
 
 void setup()
 {
-  frameRate(120);
+  frameRate(60);
   fullScreen(P3D);
   textMode(SHAPE);
 
@@ -38,20 +37,17 @@ void setup()
   l = new ArrayList<Line>();
   sPoint = new PVector(random(width), random(height), random(0, 1000));
 
-  k = new ArrayList<TLOP>();
-
   minim = new Minim(this); 
   player = minim.loadFile("01 Ultralight Beam.mp3");
   player.play();
   beat = new BeatDetect(player.bufferSize(), player.sampleRate());
-  beat.setSensitivity(100);
+  beat.setSensitivity(300);
 }
 
 void draw() 
 {
   background(255, 255, 255);
   beatDetect();
-  TLOP();
   rotateX(radians(rotX));
   rotateY(-.5);
   randomX = random(width);
@@ -86,18 +82,14 @@ void beatDetect()
     for (int i = 0; i < l.size(); i++)
     {
       l.get(i).Draw();
-      //k.get(i).Pablo();
-      fill(0);
+      fill(#000059);
       text("The Life of Pablo", random(width), random(height), random(1000));
     }
   }
-  beatIt = false;
-}
-
-void TLOP()
-{
-  for (int j = 0; j < k.size(); j++)
-  {
+ beatIt = false;
+ 
+ /*if (beatIt == false)
+ {
    
-  }
+ }*/
 }
